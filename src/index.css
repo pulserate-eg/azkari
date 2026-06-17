@@ -1,0 +1,578 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;600;700;900&display=swap');
+
+/* ══════════════════════════════════════════════════════════
+   Design Tokens - Green & Gold Islamic Theme
+═══════════════════════════════════════════════════════════ */
+:root {
+  --green-deep:    #022c22;
+  --green-mid:     #064e3b;
+  --green-light:   #10b981;
+  --gold:          #d4af37;
+  --gold-light:    #fde047;
+  --gold-glow:     rgba(212, 175, 55, 0.45);
+  --card-bg:       rgba(255, 255, 255, 0.93);
+  --card-border:   rgba(212, 175, 55, 0.35);
+  --text-dark:     #022c22;
+  --text-mid:      #064e3b;
+  --text-muted:    #6b7280;
+  --radius-xl:     28px;
+  --radius-md:     14px;
+  --shadow-card:   0 24px 48px -10px rgba(2, 44, 34, 0.5),
+                   0 0 20px rgba(212, 175, 55, 0.15) inset;
+  --shadow-active: 0 0 40px var(--gold-glow),
+                   0 24px 48px -10px rgba(2, 44, 34, 0.4);
+  --transition:    0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Base Reset
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ══════════════════════════════════════════════════════════
+   Body & Background
+═══════════════════════════════════════════════════════════ */
+body {
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Islamic pattern overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -5%;
+  width: 110%; height: 110%;
+  background-image: url('/islamic_bg_gold.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.13;
+  z-index: 0;
+  pointer-events: none;
+  animation: bg-drift 40s infinite alternate ease-in-out;
+}
+
+/* Subtle radial shimmer on top of pattern */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(16,185,129,0.06) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes bg-drift {
+  0%   { transform: scale(1)    translate(0, 0); }
+  100% { transform: scale(1.06) translate(-18px, 18px); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Layout
+═══════════════════════════════════════════════════════════ */
+#root {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  padding-bottom: 40px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Header
+═══════════════════════════════════════════════════════════ */
+.header {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.header-ornament {
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 10px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+  animation: ornament-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ornament-pulse {
+  0%, 100% { opacity: 0.5; letter-spacing: 10px; }
+  50%       { opacity: 0.9; letter-spacing: 14px; }
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  background: linear-gradient(to bottom right, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.header-subtitle {
+  color: #bbf7d0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-style: italic;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Card
+═══════════════════════════════════════════════════════════ */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.card.playing {
+  box-shadow: var(--shadow-active);
+  border-color: rgba(212, 175, 55, 0.65);
+  transform: translateY(-3px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Mode Selector
+═══════════════════════════════════════════════════════════ */
+.mode-selector {
+  display: flex;
+  gap: 8px;
+  background: rgba(2, 44, 34, 0.06);
+  padding: 5px;
+  border-radius: 50px;
+  width: 100%;
+  justify-content: center;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.mode-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--text-main);
+}
+
+.mode-btn.mode-active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--text-main);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+}
+
+.mode-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Content Display
+═══════════════════════════════════════════════════════════ */
+.zikr-display {
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(2,44,34,0.04), rgba(212,175,55,0.04));
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.zikr-content-wrapper {
+  animation: fadeSlideIn 0.5s ease;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Category Badge */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.badge-ayah {
+  background: rgba(6, 78, 59, 0.1);
+  color: var(--text-muted);
+  border: 1px solid rgba(6, 78, 59, 0.2);
+}
+
+.badge-zikr {
+  background: rgba(212, 175, 55, 0.12);
+  color: #92660a;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Surah name */
+.surah-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 10px;
+  display: block;
+}
+
+/* Placeholder */
+.placeholder-text {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* Main Arabic text */
+.quran-text {
+  font-family: 'Amiri Quran', serif;
+  font-size: 2rem;
+  color: var(--text-main);
+  line-height: 1.9;
+}
+
+/* Zikr translation */
+.zikr-translation {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Count badge */
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #92660a;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Lesson / Motivational box */
+.tafsir-box {
+  width: 100%;
+  background: var(--card-bg);
+  border-right: 4px solid var(--gold);
+  padding: 15px 20px;
+  border-radius: 8px 16px 16px 8px;
+  text-align: right;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.1);
+}
+
+.tafsir-title {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.tafsir-text {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* Error */
+.error-text {
+  color: #dc2626;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Loading spinner */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Controls
+═══════════════════════════════════════════════════════════ */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+/* Time selector */
+.time-selector {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 6px;
+}
+
+.time-selector label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.time-selector select {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  color: var(--text-main);
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: left 1rem center;
+  background-size: 1em;
+}
+
+.time-selector select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.time-selector select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Play Button */
+.play-button {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none;
+  color: var(--green-deep);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(212,175,55,0.4), 0 2px 8px rgba(0,0,0,0.1);
+  transition: all var(--transition);
+}
+
+.play-button:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 16px 32px rgba(212,175,55,0.5);
+}
+
+.play-button:active {
+  transform: scale(0.94);
+}
+
+.play-button.active {
+  background: linear-gradient(135deg, #fca5a5, #ef4444);
+  color: white;
+  box-shadow: 0 8px 24px rgba(239,68,68,0.4);
+}
+
+.play-icon {
+  width: 38px;
+  height: 38px;
+  fill: currentColor;
+}
+
+/* Ripple animation */
+.ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  animation: ripple-pulse 1.8s infinite;
+  pointer-events: none;
+}
+
+.play-button.active .ripple { border-color: #ef4444; }
+
+@keyframes ripple-pulse {
+  0%   { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(2.3); }
+}
+
+/* Status text */
+.status-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Safe Area (iPhone notch support)
+═══════════════════════════════════════════════════════════ */
+@supports (padding: max(0px)) {
+  body {
+    padding-left:   max(16px, env(safe-area-inset-left));
+    padding-right:  max(16px, env(safe-area-inset-right));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Responsive - Mobile
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  body { padding: 16px 12px; align-items: flex-start; }
+
+  .header h1 { font-size: 2.4rem; }
+  .header p  { font-size: 0.9rem; }
+
+  .card { padding: 20px 16px; }
+
+  .quran-text { font-size: 1.6rem; }
+  .tafsir-text { font-size: 0.97rem; }
+
+  .play-button { width: 76px; height: 76px; }
+  .play-icon   { width: 32px; height: 32px; }
+
+  .mode-btn { font-size: 0.85rem; padding: 8px 8px; }
+}
+
+
+.whatsapp-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-whatsapp 2s infinite;
+}
+
+.whatsapp-share-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  color: white;
+}
+
+@keyframes pulse-whatsapp {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+
+.install-app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #d4af37, #b28a20);
+  color: #022c22;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-gold 2s infinite;
+}
+
+.install-app-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+}
+
+@keyframes pulse-gold {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
