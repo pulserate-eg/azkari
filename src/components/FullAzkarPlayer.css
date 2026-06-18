@@ -74,19 +74,13 @@
 .play-indicator {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-md);
-  background: var(--card-bg);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  background: rgba(2, 44, 34, 0.05);
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  cursor: pointer;
-  transition: all var(--transition);
-  text-align: right;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-  font-family: inherit;
+  justify-content: center;
+  align-items: center;
+  color: var(--gold);
+  transition: all 0.3s;
 }
 
 .azkar-card:focus-visible {

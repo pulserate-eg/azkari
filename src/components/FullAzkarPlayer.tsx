@@ -1,16 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import './FullAzkarPlayer.css';
 
+const base = import.meta.env.BASE_URL;
+
 const TRACKS = {
   morning: {
     title: 'أذكار الصباح كاملة',
-    url: '/azkar/morning.mp3',
+    url: `${base}azkar/morning.mp3`,
     duration: '21 دقيقة',
     icon: '🌅'
   },
   evening: {
     title: 'أذكار المساء كاملة',
-    url: '/azkar/evening.mp3',
+    url: `${base}azkar/evening.mp3`,
     duration: '21 دقيقة',
     icon: '🌙'
   }
@@ -44,12 +46,28 @@ export default function FullAzkarPlayer() {
     };
   }, []);
 
+  // Listen for stopOtherAudio
+  useEffect(() => {
+    const handleStop = (e: any) => {
+      if (e.detail !== 'full-player' && audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+    window.addEventListener('stopOtherAudio', handleStop);
+    return () => window.removeEventListener('stopOtherAudio', handleStop);
+  }, []);
+
   const toggleTrack = (track: 'morning' | 'evening') => {
     if (!audioRef.current) return;
 
-    if (activeTrack === track && isPlaying) {
+    const isCurrentlyPlaying = !audioRef.current.paused;
+    const isSameTrack = activeTrack === track;
+
+    if (isSameTrack && isCurrentlyPlaying) {
       audioRef.current.pause();
-    } else if (activeTrack === track && !isPlaying) {
+    } else if (isSameTrack && !isCurrentlyPlaying) {
+      window.dispatchEvent(new CustomEvent('stopOtherAudio', { detail: 'full-player' }));
       audioRef.current.play().catch(e => {
         if (e.name === 'AbortError') return;
         console.error('Audio playback failed', e);

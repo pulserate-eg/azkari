@@ -60,6 +60,18 @@ export default function AzkarPlayer() {
     };
   }, []);
 
+  // Listen for stopOtherAudio
+  useEffect(() => {
+    const handleStop = (e: any) => {
+      if (e.detail !== 'azkar-player' && audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+    window.addEventListener('stopOtherAudio', handleStop);
+    return () => window.removeEventListener('stopOtherAudio', handleStop);
+  }, []);
+
   // ─── Click Sound ─────────────────────────────────────────────
   const playClickSound = async () => {
     try {
@@ -129,14 +141,16 @@ export default function AzkarPlayer() {
 
     if (item.audio) {
       let audioSrc = item.audio;
+      const base = import.meta.env.BASE_URL; // usually '/azkari/'
 
-      // For ayahs: build path from the audio field filename + selected reciter
-      // item.audio is like '/audio/ayah_94_5.mp3' — we replace the base path with reciter folder
       if (item.type === 'ayah') {
-        const fileName = item.audio.split('/').pop(); // e.g. 'ayah_94_5.mp3'
-        audioSrc = `/audio/${reciterRef.current}/${fileName}`;
+        const fileName = item.audio.split('/').pop(); 
+        audioSrc = `${base}audio/${reciterRef.current}/${fileName}`;
+      } else if (audioSrc.startsWith('/')) {
+        audioSrc = `${base}${audioSrc.slice(1)}`;
       }
-      // For zikr: audio is already the correct absolute path like '/azkar/zikr_subhanallah.mp3'
+
+      window.dispatchEvent(new CustomEvent('stopOtherAudio', { detail: 'azkar-player' }));
 
       audioRef.current.src = audioSrc;
       audioRef.current.load();
@@ -171,10 +185,10 @@ export default function AzkarPlayer() {
   }, [intervalMinutes, pickNextContent, playContent]);
 
   // ─── Toggle Active ────────────────────────────────────────────
-  const toggleActive = async () => {
+  const toggleActive = () => {
     playClickSound();
     
-    if (isActive) {
+    if (isActiveRef.current) {
       setIsActive(false);
       isActiveRef.current = false;
       if (timerRef.current) clearInterval(timerRef.current);
@@ -188,9 +202,7 @@ export default function AzkarPlayer() {
       setIsActive(true);
       isActiveRef.current = true;
       if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        try {
-          await Notification.requestPermission();
-        } catch {}
+        Notification.requestPermission().catch(() => {});
       }
       
       if (!isActiveRef.current) return;
