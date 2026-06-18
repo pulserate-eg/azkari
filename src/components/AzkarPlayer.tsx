@@ -100,17 +100,7 @@ export default function AzkarPlayer() {
 
   // ─── Notifications ───────────────────────────────────────────
   const showNotification = useCallback((title: string, body: string) => {
-    try {
-      if (!('Notification' in window) || Notification.permission !== 'granted') return;
-      const opts = { body, icon: '/icon.svg', vibrate: [200, 100, 200] } as any;
-      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.ready
-          .then(r => r.showNotification(title, opts))
-          .catch(() => { try { new Notification(title, opts); } catch {} });
-      } else {
-        try { new Notification(title, opts); } catch {}
-      }
-    } catch {}
+    // Notifications disabled based on user request
   }, []);
 
   // ─── Play Content ─────────────────────────────────────────────
@@ -187,11 +177,6 @@ export default function AzkarPlayer() {
     } else {
       setIsActive(true);
       isActiveRef.current = true;
-      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        try {
-          await Notification.requestPermission();
-        } catch {}
-      }
       
       if (!isActiveRef.current) return;
       const first = pickNextContent();
