@@ -99,7 +99,7 @@ export default function AzkarPlayer() {
   };
 
   // ─── Notifications ───────────────────────────────────────────
-  const showNotification = useCallback((title: string, body: string) => {
+  const showNotification = useCallback((_title: string, _body: string) => {
     // Notifications disabled based on user request
   }, []);
 
