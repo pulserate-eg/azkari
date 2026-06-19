@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import AzkarPlayer from './components/AzkarPlayer';
 import FullAzkarPlayer from './components/FullAzkarPlayer';
+import Rosary from './components/Rosary';
+import HisnReader from './components/HisnReader';
+
+type TabType = 'home' | 'rosary' | 'hisn';
 
 function App() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<TabType>('home');
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -24,8 +29,25 @@ function App() {
     }
   };
 
-  const shareMessage = encodeURIComponent('تطبيق أذكاري 🌙\nنورٌ في كل لحظة، وذكرٌ في كل نفس. رفيقك الدائم للطمأنينة بدون إنترنت!\n\nجربه الآن وشاركه ليكون صدقة جارية لك: \nhttps://azkari-app.com');
+  const shareMessage = encodeURIComponent('تطبيق أذكاري 🌙\nنورٌ في كل لحظة، وذكرٌ في كل نفس. رفيقك الدائم للطمأنينة بدون إنترنت!\n\nجربه الآن وشاركه ليكون صدقة جارية لك: \nhttps://pulserate-eg.github.io/azkari/');
   const whatsappUrl = `https://wa.me/?text=${shareMessage}`;
+
+  const renderActiveTabContent = () => {
+    switch (activeTab) {
+      case 'rosary':
+        return <Rosary />;
+      case 'hisn':
+        return <HisnReader />;
+      case 'home':
+      default:
+        return (
+          <>
+            <FullAzkarPlayer />
+            <AzkarPlayer />
+          </>
+        );
+    }
+  };
 
   return (
     <div className="app-container">
@@ -47,10 +69,48 @@ function App() {
           شارك كصدقة جارية
         </a>
       </header>
-      <main>
-        <FullAzkarPlayer />
-        <AzkarPlayer />
+      
+      <main className="tab-content">
+        {renderActiveTabContent()}
       </main>
+
+      {/* Sleek Bottom Navigation Bar */}
+      <nav className="bottom-nav">
+        <div className="bottom-nav-container">
+          <button
+            className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
+            onClick={() => {
+              if ('vibrate' in navigator) navigator.vibrate(15);
+              setActiveTab('home');
+            }}
+          >
+            <span className="nav-icon">💌</span>
+            <span className="nav-label">الرسائل</span>
+          </button>
+          
+          <button
+            className={`nav-item ${activeTab === 'rosary' ? 'active' : ''}`}
+            onClick={() => {
+              if ('vibrate' in navigator) navigator.vibrate(15);
+              setActiveTab('rosary');
+            }}
+          >
+            <span className="nav-icon">📿</span>
+            <span className="nav-label">السبحة</span>
+          </button>
+          
+          <button
+            className={`nav-item ${activeTab === 'hisn' ? 'active' : ''}`}
+            onClick={() => {
+              if ('vibrate' in navigator) navigator.vibrate(15);
+              setActiveTab('hisn');
+            }}
+          >
+            <span className="nav-icon">📖</span>
+            <span className="nav-label">الأذكار</span>
+          </button>
+        </div>
+      </nav>
     </div>
   );
 }
