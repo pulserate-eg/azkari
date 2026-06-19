@@ -244,6 +244,28 @@ export default function AzkarPlayer() {
         ))}
       </div>
 
+      {/* Main Action (Play Button) */}
+      <div className="main-action">
+        <button
+          className={`play-button ${isActive ? 'active' : ''}`}
+          onClick={toggleActive}
+          aria-label={isActive ? 'إيقاف' : 'بدء'}
+        >
+          {isActive && <div className="ripple"></div>}
+          {isActive ? (
+            <svg className="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+          ) : (
+            <svg className="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          )}
+        </button>
+
+        <p className="status-text">
+          {isActive
+            ? `⏱ الرسالة القادمة بعد ${intervalMinutes} ${intervalMinutes > 10 ? 'دقيقة' : (intervalMinutes === 1 ? 'دقيقة' : (intervalMinutes === 2 ? 'دقيقتين' : 'دقائق'))}`
+            : `${allContent.length} رسالة جاهزة لك 🌟`}
+        </p>
+      </div>
+
       {/* Content Display */}
       <div className="zikr-display">
         {isActive ? (
@@ -331,25 +353,6 @@ export default function AzkarPlayer() {
             <option value="ar.husary">محمود خليل الحصري</option>
           </select>
         </div>
-
-        <button
-          className={`play-button ${isActive ? 'active' : ''}`}
-          onClick={toggleActive}
-          aria-label={isActive ? 'إيقاف' : 'بدء'}
-        >
-          {isActive && <div className="ripple"></div>}
-          {isActive ? (
-            <svg className="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
-          ) : (
-            <svg className="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          )}
-        </button>
-
-        <p className="status-text">
-          {isActive
-            ? `⏱ الرسالة القادمة بعد ${intervalMinutes} ${intervalMinutes > 10 ? 'دقيقة' : (intervalMinutes === 1 ? 'دقيقة' : (intervalMinutes === 2 ? 'دقيقتين' : 'دقائق'))}`
-            : `${allContent.length} رسالة جاهزة لك 🌟`}
-        </p>
       </div>
     </div>
   );
