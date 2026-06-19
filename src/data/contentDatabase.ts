@@ -184,6 +184,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'سُبْحَانَ اللَّهِ',
     zikrTranslation: 'تنزيه لله عن كل نقص وعيب',
     zikrCount: 33,
+    audio: '/azkar/zikr_subhanallah.mp3',
     lesson: 'قل "سبحان الله" ثلاثاً وثلاثين مرة. قال ﷺ: "من قال سبحان الله وبحمده في يوم مائة مرة، حُطَّت خطاياه وإن كانت مثل زبد البحر." كلمة واحدة، وأجر لا يُحصى!',
     category: 'تسبيح'
   },
@@ -211,6 +212,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'لَا إِلَٰهَ إِلَّا اللَّهُ',
     zikrTranslation: 'لا معبود بحق إلا الله وحده',
     zikrCount: 100,
+    audio: '/azkar/zikr_la_ilah.mp3',
     lesson: 'أفضل ما قاله النبيون هي لا إله إلا الله. من قالها مئة مرة كانت له حرزاً ومحيت عنه مئة سيئة. هي أحب الكلام إلى الله!',
     category: 'توحيد'
   },
@@ -220,6 +222,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',
     zikrTranslation: 'طلب من الله أن يُثني على النبي ﷺ',
     zikrCount: 10,
+    audio: '/azkar/zikr_salah_alnabi.mp3',
     lesson: 'من صلى عليَّ صلاة واحدة، صلى الله عليه عشراً. قل الآن "اللهم صل على محمد" عشر مرات وتخيل كيف تنهال عليك عشر رحمات من رب العالمين!',
     category: 'صلاة على النبي'
   },
@@ -229,6 +232,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ',
     zikrTranslation: 'طلب المغفرة من الله العظيم',
     zikrCount: 100,
+    audio: '/azkar/zikr_astaghfirullah.mp3',
     lesson: 'الاستغفار يفتح أبواب الرزق، ويُذهب الهم والغم، ويجعل لك من كل ضيق فرجاً. لم يكن النبي ﷺ يترك الاستغفار حتى في أصعب أوقاته. فلا تتركه أنت!',
     category: 'استغفار'
   },
@@ -238,6 +242,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',
     zikrTranslation: 'لا تحوّل ولا طاقة إلا بمعونة الله',
     zikrCount: 10,
+    audio: '/azkar/zikr_la_hawla.mp3',
     lesson: 'هي كنز من كنوز الجنة! قلها حين تشعر بالعجز والإرهاق. فأنت لا تحتاج قوتك أنت، فقوة الله وحده تكفيك وتكفي كل شيء.',
     category: 'حوقلة'
   },
@@ -247,6 +252,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ',
     zikrTranslation: 'الله يكفيني وعليه أتوكل',
     zikrCount: 7,
+    audio: '/azkar/zikr_hasbi_allah.mp3',
     lesson: 'هذا الدعاء كافٍ لدفع كل هم. من قاله حين يصبح وحين يمسي سبع مرات كفاه الله ما أهمه.',
     category: 'توكل'
   },
@@ -256,6 +262,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ',
     zikrTranslation: 'يا من هو دائم الحياة والقيام بالأمور',
     zikrCount: 3,
+    audio: '/azkar/zikr_ya_hayyu.mp3',
     lesson: 'دعاء النبي ﷺ في وقت الكرب والحزن. حين يضيق بك الحال وتنسد الأبواب، قلها وانتظر كيف يفتح الله لك من حيث لا تحتسب.',
     category: 'استغاثة'
   },
@@ -265,6 +272,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
     zikrTranslation: 'دعاء الخير في الدنيا والآخرة',
     zikrCount: 3,
+    audio: '/azkar/zikr_rabbana.mp3',
     lesson: 'أحب الأدعية إلى النبي ﷺ. في كلمات قليلة جمع كل ما يتمناه المؤمن. ادعُ بها الآن وأنت موقن أن الله سيجمع لك خير الدنيا والآخرة.',
     category: 'دعاء شامل'
   },
@@ -274,6 +282,7 @@ export const azkarList: AppContent[] = [
     zikrText: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ',
     zikrTranslation: 'ذكر الصباح والمساء',
     zikrCount: 1,
+    audio: '/azkar/zikr_sabahu_masaa.mp3',
     lesson: 'ابدأ يومك أو مساءك بهذا الذكر. إنه إعلان بأن كل لحظة في حياتك ملك لله. من بدأ يومه بذكر الله، بارك الله له في وقته وعمله.',
     category: 'أذكار الصباح والمساء'
   },

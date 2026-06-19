@@ -201,13 +201,27 @@ export default function AzkarPlayer() {
     } else {
       setIsActive(true);
       isActiveRef.current = true;
+
+      // Unlock audio element for iOS Safari and Chrome background playback
+      if (audioRef.current) {
+        const silentWav = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==';
+        audioRef.current.src = silentWav;
+        audioRef.current.play().catch(() => {});
+      }
+
       if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
         Notification.requestPermission().catch(() => {});
       }
       
       if (!isActiveRef.current) return;
       const first = pickNextContent();
-      playContent(first);
+      
+      // Delay playContent slightly to allow the silent unlock to start playing
+      setTimeout(() => {
+        if (isActiveRef.current) {
+          playContent(first);
+        }
+      }, 50);
     }
   };
 
