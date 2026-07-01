@@ -10,7 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       // Include all assets needed for full offline experience
       includeAssets: [
-        'icon.svg',
+        'icon-192x192.png',
+        'icon-512x512.png',
         'islamic_bg_gold.png',
         'audio/*/*.mp3',
         'azkar/*.mp3'
@@ -70,9 +71,15 @@ export default defineConfig({
         lang: 'ar',
         icons: [
           {
-            src: 'icon.svg',
-            sizes: '192x192 512x512',
-            type: 'image/svg+xml',
+            src: 'icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable'
+          },
+          {
+            src: 'icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
             purpose: 'any maskable'
           }
         ]

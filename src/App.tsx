@@ -56,11 +56,15 @@ function App() {
         <h1>أذكاري</h1>
         <p className="header-subtitle">نـورٌ في كلِّ لحظة، وذِكـرٌ في كلِّ نَفَس</p>
         
-        {deferredPrompt && (
-          <button onClick={handleInstallClick} className="install-app-btn">
-            📱 ثبّت التطبيق ليعمل بدون إنترنت
-          </button>
-        )}
+        <button onClick={() => {
+          if (deferredPrompt) {
+            handleInstallClick();
+          } else {
+            alert('لتنزيل التطبيق: افتح قائمة المتصفح واضغط على "إضافة إلى الشاشة الرئيسية" أو "Add to Home Screen".');
+          }
+        }} className="install-app-btn">
+          📱 ثبّت التطبيق ليعمل بدون إنترنت
+        </button>
 
         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="whatsapp-share-btn">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -76,11 +80,22 @@ function App() {
 
       {/* Sleek Bottom Navigation Bar */}
       <nav className="bottom-nav">
+        {/* Floating Install Button directly attached to nav */}
+        <div style={{ position: 'absolute', top: '-60px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <button onClick={() => {
+            if (deferredPrompt) {
+              handleInstallClick();
+            } else {
+              alert('لتنزيل التطبيق: افتح خيارات المتصفح (الثلاث نقاط) واضغط على "إضافة إلى الشاشة الرئيسية" أو "Add to Home Screen".');
+            }
+          }} className="install-app-btn" style={{ margin: 0, boxShadow: '0 10px 25px rgba(212,175,55,0.6)', transform: 'scale(1.1)' }}>
+            📥 تحميل التطبيق الآن
+          </button>
+        </div>
         <div className="bottom-nav-container">
           <button
             className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
             onClick={() => {
-              if ('vibrate' in navigator) navigator.vibrate(15);
               setActiveTab('home');
             }}
           >
@@ -91,7 +106,6 @@ function App() {
           <button
             className={`nav-item ${activeTab === 'rosary' ? 'active' : ''}`}
             onClick={() => {
-              if ('vibrate' in navigator) navigator.vibrate(15);
               setActiveTab('rosary');
             }}
           >
@@ -102,7 +116,6 @@ function App() {
           <button
             className={`nav-item ${activeTab === 'hisn' ? 'active' : ''}`}
             onClick={() => {
-              if ('vibrate' in navigator) navigator.vibrate(15);
               setActiveTab('hisn');
             }}
           >

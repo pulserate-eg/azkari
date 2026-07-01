@@ -239,27 +239,8 @@ export default function AzkarPlayer() {
   return (
     <div className={`card ${isPlaying ? 'playing' : ''}`}>
 
-      {/* Mode Selector */}
-      <div className="mode-selector">
-        {[
-          { value: 'all',  label: '✨ الكل'   },
-          { value: 'ayah', label: '📖 آيات'   },
-          { value: 'zikr', label: '📿 أذكار'  },
-        ].map(opt => (
-          <button
-            key={opt.value}
-            role="tab"
-            aria-pressed={showZikrMode === opt.value}
-            className={`mode-btn ${showZikrMode === opt.value ? 'mode-active' : ''}`}
-            onClick={() => handleModeChange(opt.value as 'all'|'ayah'|'zikr')}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
-
       {/* Main Action (Play Button) */}
-      <div className="main-action">
+      <div className="main-action" style={{ marginBottom: '20px' }}>
         <button
           className={`play-button ${isActive ? 'active' : ''}`}
           onClick={toggleActive}
@@ -278,6 +259,25 @@ export default function AzkarPlayer() {
             ? `⏱ الرسالة القادمة بعد ${intervalMinutes} ${intervalMinutes > 10 ? 'دقيقة' : (intervalMinutes === 1 ? 'دقيقة' : (intervalMinutes === 2 ? 'دقيقتين' : 'دقائق'))}`
             : `${allContent.length} رسالة جاهزة لك 🌟`}
         </p>
+      </div>
+
+      {/* Mode Selector */}
+      <div className="mode-selector">
+        {[
+          { value: 'all',  label: '✨ الكل'   },
+          { value: 'ayah', label: '📖 آيات'   },
+          { value: 'zikr', label: '📿 أذكار'  },
+        ].map(opt => (
+          <button
+            key={opt.value}
+            role="tab"
+            aria-pressed={showZikrMode === opt.value}
+            className={`mode-btn ${showZikrMode === opt.value ? 'mode-active' : ''}`}
+            onClick={() => handleModeChange(opt.value as 'all'|'ayah'|'zikr')}
+          >
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       {/* Content Display */}

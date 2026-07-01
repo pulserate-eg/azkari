@@ -34,17 +34,6 @@ export default function HisnReader() {
 
     const nextCount = currentCount - 1;
     setCounts((prev) => ({ ...prev, [id]: nextCount }));
-
-    // Haptics
-    if ('vibrate' in navigator) {
-      if (nextCount === 0) {
-        // Zikr completed vibration
-        navigator.vibrate([40, 30, 40]);
-      } else {
-        // Soft click
-        navigator.vibrate(25);
-      }
-    }
   };
 
   const handleResetCategory = () => {
@@ -53,7 +42,6 @@ export default function HisnReader() {
       initialCounts[z.id] = z.count;
     });
     setCounts(initialCounts);
-    if ('vibrate' in navigator) navigator.vibrate(60);
   };
 
   return (

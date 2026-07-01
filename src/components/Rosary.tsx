@@ -32,27 +32,14 @@ export default function Rosary() {
     
     setCount(newCount);
     setTotalCount(newTotal);
-
-    // Haptic Feedback
-    if ('vibrate' in navigator) {
-      if (typeof target === 'number' && newCount === target) {
-        // Double vibration on target reach
-        navigator.vibrate([100, 50, 100]);
-      } else {
-        // Short vibration on tap
-        navigator.vibrate(45);
-      }
-    }
   };
 
   const handleReset = () => {
-    if ('vibrate' in navigator) navigator.vibrate(80);
     setCount(0);
   };
 
   const handleResetTotal = () => {
     if (window.confirm('هل تريد تصفير العداد الإجمالي لجميع تسبيحاتك؟')) {
-      if ('vibrate' in navigator) navigator.vibrate(120);
       setTotalCount(0);
       setCount(0);
     }
